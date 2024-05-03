@@ -1,4 +1,7 @@
 import random
+#Description: Function creates randomized ships for computer
+#Takes null
+#Returns randomly placed ship
 def make_player_ships(player_board):
     ships_placed = 4
     while ships_placed > 0:
@@ -16,6 +19,9 @@ def make_player_ships(player_board):
         else:
             print("Only enter numbers 1-5")
 
+#Description: Function makes computer randomly guess for player's ship
+#Takes Player's board data (ship placement)
+#Returns computer guess (either hit "💣" or miss "❌")
 def computer_guess(player_board):
     computer_shot = False
     while not computer_shot:
@@ -31,6 +37,9 @@ def computer_guess(player_board):
             print("Computer hit")
             computer_shot = True
 
+#Description: Function counts how many ships computer has sunk
+#Takes Number of hits ("💣") on board
+#Returns game status, either continue game or end game if all ships have sunk
 def player_hit_counter(player_board):
     hit_counter = 0
     for row in player_board:
@@ -41,6 +50,9 @@ def player_hit_counter(player_board):
         print("you lost, all ships sunk")
         return True
     return False
+#Description: Function counts how many ships player has sunk
+#Takes Number of hits ("💣") on board
+#Returns game status, either continue game or end game if all ships have sunk
 def computer_hit_counter(gameboard):
     second_hit_counter = 0
     for row in gameboard:
@@ -52,9 +64,15 @@ def computer_hit_counter(gameboard):
             return True
     return False
 
+#Description: Function creates randomized ships
+#Takes Null
+#Returns randomly placed ships
 def create_randomized_ship():                           
     return random.randint(0, 5), random.randint(0, 5)
 
+#Description: Function prints board
+#Takes board size
+#Returns a 5x5 board
 def print_arrays(array):
     for i in range(5):
         print(array[i])
@@ -71,17 +89,16 @@ for row in player_board:
     print(" ".join(row))
 
 make_player_ships(player_board)
-
 ship1 = create_randomized_ship()
 ship2 = create_randomized_ship()
 ship3 = create_randomized_ship()
 ship4 = create_randomized_ship()
 
-total_ships_left = 4
+total_ships_left = 4                       
 
-remaining_shots = 10
+remaining_shots = 10                        
 
-ships_randomized = False
+ships_randomized = False                        #Ensures that each ship is randomized and not on top of eachother
 while not ships_randomized:
     if ship2 == ship1:
         ship2 = create_randomized_ship()
@@ -92,19 +109,19 @@ while not ships_randomized:
     else:
         ships_randomized = True
 
-game_finished = False
+game_finished = False                           #Game continues to run
 
 while remaining_shots > 0 and not game_finished:
     try:
-        row_guess = (input("Enter a row (1-5)"))
-        column_guess = (input("Enter a column (1-5)"))
-    except ValueError:
-        print("Input was not a number")
+        row_guess = (input("Enter a row (1-5)"))        #Prompts user to enter a number 1-5 for the row
+        column_guess = (input("Enter a column (1-5)"))  #Prompts user to enter a number 1-5 for the column
+    except ValueError:                                  #If user enters number NOT 1 through 5
+        print("Input was not a number")                 #Tells user input was invalid
         continue
-    viable_guesses = ["1", "2", "3", "4", "5"]
-    if row_guess not in viable_guesses:
+    viable_guesses = ["1", "2", "3", "4", "5"]          #Sets viable guesses to numbers 1-5
+    if row_guess not in viable_guesses:                 #if user input for row not within 1-5 print number must be in range
         print("The numbers in each row must range from 1-5")
-    elif column_guess not in viable_guesses:
+    elif column_guess not in viable_guesses:            #if user input for column not within 1-5 print number must be in range
         print("The numbers in each column must range from 1-5")
     else:
         row_guess = int(row_guess) - 1
@@ -112,19 +129,20 @@ while remaining_shots > 0 and not game_finished:
 
         if (row_guess, column_guess) == ship1 or (row_guess, column_guess) == ship2 or (row_guess, column_guess) == ship3 or (row_guess, column_guess) == ship4:
             print("Hit!")
-            gameboard[row_guess][column_guess] = "💣"
-            total_ships_left -= 1
-            remaining_shots -= 1
-            if total_ships_left == 0:
-                print("you lost, all ships sunk")
+            gameboard[row_guess][column_guess] = "💣"       #Gameboard now displays bomb emoji in hit spot
+            total_ships_left -= 1                           #Subtracts a ship from total
+            remaining_shots -= 1                            #Subtracts a shot from remaining shots
+            if total_ships_left == 0:                       #If no more ships remain on players board
+                print("you lost, all ships sunk")           #Game is over and player loses
                 game_finished = True
-            if remaining_shots < 0:
+            if remaining_shots < 0:                         #If remaining shots are empty player also loses
                 print("You're out of shots, you lose")
             
-        else:
+        else:                                                #If the user guess does not land on the ship print "miss"
             print("Miss")   
-            gameboard[row_guess][column_guess] = "❌"
-            remaining_shots -= 1
+            gameboard[row_guess][column_guess] = "❌"    #Gameboard now displays X emoji for missed guess spot
+            remaining_shots -= 1                         #Subtracts a remaining shot
+
 
         computer_guess(player_board)
         print_arrays(gameboard)
