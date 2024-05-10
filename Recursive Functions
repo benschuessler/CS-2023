@@ -1,0 +1,89 @@
+#Ben Schuessler
+#Recursive functions
+#This Program finds different collection of multiple recursive functions
+#Bugs: N/A
+def main():
+    answer = "Y"
+    go = True
+    
+    while go == True:
+
+        number = int(input("Enter a number"))
+        answer = input("""Enter a choice - Enter Q to quit 
+        1) Factorial
+        2) Summation
+        3) Powers
+        4) Sum of Digits
+        5) Fibonacci's number""")
+            
+        if answer == "1":
+            print(factorial(number))
+        if answer == "2":
+            print(summation(number))
+        if answer == "3":
+            power = int(input("Enter an exponent"))
+            print(powers(number, power))
+        if answer == "4":
+            print(sum_of_digits(number))
+        if answer == "5":
+            print(fibonacci(number))
+        elif answer == "Q":
+            go = False
+        
+                
+        again = str(input("Play again? ")) # asks user if they want to play again
+        if again == "yes":                 # If user says yes then keep running code
+            go = True 
+        else:                              # If user does not say yes then break code
+            go = False
+#Description: function gets the factorial of a number
+#Takes takes entered number
+#Returns factorial of entered number
+def factorial(number):
+    if number == 1:
+        return number
+    elif number == 0:
+        print("1")
+    else:
+        return number*factorial(number-1)
+#Description: function gets the summation of a number
+#Takes entered number
+#Returns summation of entered number
+def summation(number):
+    if number > 0:
+        return number + summation(number-1)
+    elif number == 0:
+        return 0
+    elif number == 1:
+        return 1
+#Description: function gives the product of a base to an entetred exponent
+#Takes origianlly entered number (used as base) and user entered exponent
+#Returns product of base to the power of exponent
+def powers(number, power):
+    if number > 0:
+        return power * powers(number-1, power)
+    elif number == 0:
+        return 1
+#Description: function finds the sum of digits in user entered number
+#Takes user entered number
+#Returns the sum of all digits of number
+def sum_of_digits(number):
+    if number < 10:
+        return number
+    else:
+        return (number % 10 + sum_of_digits(int(number/10)))                
+#Description: function finds fibonaccis number of user entered number
+#Takes user entered number
+#Returns fibonaccis number 
+def fibonacci(number):
+    if number == 0:
+        return 0
+    if number == 1:
+        return 1
+    elif number > 1:
+        return fibonacci(number - 1) + fibonacci(number - 2)
+
+main()
+
+         
+
